@@ -1,0 +1,13 @@
+[pylint]
+disable=
+    broad-except,
+    consider-using-f-string,
+    line-too-long,
+    too-many-branches,
+    too-many-locals,
+good-names=
+    template-python
+ignore=
+    __init__.py,
+notes=
+    FIXME,
