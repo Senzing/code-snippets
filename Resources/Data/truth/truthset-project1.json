@@ -1,0 +1,11 @@
+{
+    "DATA_SOURCES":
+    [
+        {
+            "DATA_SOURCE": "CUSTOMERS",
+            "FILE_FORMAT": "JSON",
+            "FILE_NAME": "customers.json",
+            "ENABLED": "Yes"
+        }
+    ]
+}

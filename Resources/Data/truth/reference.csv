@@ -1,0 +1,27 @@
+DATA_SOURCE,RECORD_ID,RECORD_TYPE,PRIMARY_NAME_ORG,EMPLOYER_NAME,PRIMARY_NAME_FULL,PRIMARY_NAME_LAST,PRIMARY_NAME_FIRST,DATE_OF_BIRTH,ADDR_TYPE,ADDR_FULL,ADDR_LINE1,ADDR_CITY,ADDR_STATE,ADDR_POSTAL_CODE,ADDR_COUNTRY,PHONE_TYPE,PHONE_NUMBER,EMAIL_ADDRESS,REL_ANCHOR_KEY,REL_POINTER_KEY,REL_POINTER_ROLE,STATUS,CATEGORY
+REFERENCE,2012,ORGANIZATION,Hajah Maimunah,,,,,,REGISTERED,"#01-11, HillV2, 4 Hillview Rise, 667979",,,,,Singapore,,,,2011,,,Active,LLC
+REFERENCE,2013,PERSON,,,Wang Jie,,,1993-09-14,,,,,,,,,,,,2011,OWNS 60%,Current,Owner
+REFERENCE,2014,PERSON,,,Wang Wei,,,1997-09-14,,,,,,,,,,,,2011,OWNS 40%,Current,Owner
+REFERENCE,2023,ORGANIZATION,Infinite Exports Company,,,,,,REGISTERED,920 Venice Blvd Venice CA 90291,,,,,,,,,2021,2022,Headquarters,Active,Corporation
+REFERENCE,2024,ORGANIZATION,Infinite Exports USA,,,,,,MAILING,,PO Box 19521,Las Vegas,NV,89119,,,,,2022,,,Active,LLC
+REFERENCE,2025,PERSON,,,,Smith Jr,Robert,,PRIMARY,,"123 Main Street, Las Vegas NV 89132",,,,,,,,,2022,Treasurer,Current,Treasurer
+REFERENCE,2026,PERSON,,,,Smith Sr,Robert,,PRIMARY,,"123 Main Street, Las Vegas NV 89132",,,,,,,,,2022,President,Current,President
+REFERENCE,2071,ORGANIZATION,Universal Export Corporation,,,,,,BUSINESS,"Hughes Plaza, 100 Howard Hughes Way, Las Vegas, NV 89111",,,,,,,800-111-1234,,2071,2073,Direct Parent,,
+REFERENCE,2072,ORGANIZATION,Universal Exports ,,,,,,BUSINESS,,100 Howard Hughs Plaza,Las Vegas,NV,89111,,,800-111-1234,,2072,,,,
+REFERENCE,2073,ORGANIZATION,"Universal Exports, USA",,,,,,REGISTERED,,"Chrysler Building, 405 Lexington Avenue",New York,NY,10174,,,,,2073,2074,Global Parent,,
+REFERENCE,2074,ORGANIZATION,Universal Exports Worldwide,,,,,,REGISTERED,,405 Lexington Avenue,Manhattan,NY,10174,,,,,2074,,,,
+REFERENCE,2081,PERSON,,Universal Export Corporation,Howard Hessemen,,,,,,,,,,,,,,,2071,Owner,Current,Owns 50%
+REFERENCE,2082,PERSON,,Universal Exports ,"Hesseman, Howard",,,,HOME,,"1231 Las Vegas Blvd, Penthouse Suite",Las Vegas,NV,,,,,,,2072,Principal,Current,President
+REFERENCE,2091,PERSON,,Universal Export Corporation,Margaret Charney,,,,,,,,,,,,,,,2071,Owner,Current,Owns 25%
+REFERENCE,2092,PERSON,,Universal Exports ,"Charney, Peggie",,,,,,,,,,,,,,,2072,Principal,Current,Secretary/Treasurer
+REFERENCE,2101,PERSON,,Universal Exports ,Keeley Jones,,,,,,,,,,,,818-892-2818,kjones@universal.com,,2072,Principal,Previous,Vice-president of Finance
+REFERENCE,2102,PERSON,,Universal Export Company,"Jones, Kaylee",,,,,,,,,,,,18188922818,kjones@universal.com,,,,,Contact
+REFERENCE,2111,PERSON,,Universal Exports ,Susan Meyer,,,,PRIMARY,,"Fieldstrasse 10, FL-2198 Triesen",,,,Lichtenstein,,,,,2072,Principal,Current,Vice-president of Marketing
+REFERENCE,2112,PERSON,,Universal Export Company,Susan Meyer Thomas,,,,PRIMARY,"Fieldstrasse 10, FL-2198 Triesen, Lichtenstein",,,,,,,,,,,,Active,Contact
+REFERENCE,2121,PERSON,,Universal Exports ,Kristen Salinger,,,,PRIMARY,,123 King street,New York,NY,10012,,MOBILE,320-392-2137,,,2072,Principal,Former,Vice-president of Finance
+REFERENCE,2122,PERSON,,Universal Export Company,"Salenger, Kristin",,,,PRIMARY,,8321 Duke Street,Los Angeles,CA,90015,,MOBILE,(320) 392-2137,,,,,Active,Contact
+REFERENCE,2131,PERSON,,Universal Exports ,Rosemay A Thomas,,,,PRIMARY,"18 Danver Place, Loughborough, Leicestershire, LE11 1UU, United Kingdom",,,,,,,,,,2071,Principal,Former,Vice-president of Marketing
+REFERENCE,2132,PERSON,,Universal Export Company,,Thomas,Rosemary A,,PRIMARY,"18 Danver Place, Loughborough, Leicestershire, United Kingdom, LE11 1UU",,,,,,,,,,,,Active,Contact
+REFERENCE,2141,ORGANIZATION,Universal Exports Singapore,,,,,,REGISTERED,"4 Hillview Rise, Singapore, 667979, Singapore ",,,,,,,,,,2074,Global Parent,,
+REFERENCE,2151,ORGANIZATION,Universal Exports India,,,,,,REGISTERED,"Mullanpara Road, Vythiri, 673576, India",,,,,,,,,,2074,Global Parent,,
+REFERENCE,2162,PERSON,,Universal Export Company,"Alexopoulos, Nastassia",,,,PRIMARY,,6781 Metaxa Forest,Athens,GA,30009,,,,patak@universal.com,,,,Active,Contact
