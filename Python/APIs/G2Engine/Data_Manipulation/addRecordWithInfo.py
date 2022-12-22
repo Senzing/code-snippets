@@ -30,4 +30,3 @@ except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2E
     sys.exit(-1)
 
 print(with_info.decode())
-

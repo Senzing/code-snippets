@@ -12,7 +12,12 @@ try:
     g2_engine = G2Engine()
     g2_engine.init('G2Engine', engine_config_json, False)
     g2_engine.processRedoRecordWithInfo(redo_record, with_info)
-    print(with_info.decode()) if redo_record and with_info else print('No redo records currently available.')
+
+    if with_info:
+        print(with_info.decode())
+    else:
+        print('No redo records currently available.')
+
     g2_engine.destroy()
 except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2Exception) as ex:
     print(ex)

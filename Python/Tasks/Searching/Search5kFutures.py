@@ -50,13 +50,13 @@ def search_results(result, record, out_file):
         results_count = Counter(k for entity in response_entities for k in entity.keys() if k.startswith('MATCH_INFO'))
         results_str.append(f'\n{results_count["MATCH_INFO"]} results for {record}')
 
-        for idx, result in enumerate(response_entities, start=1):
+        for idx, entity in enumerate(response_entities, start=1):
             results_str.append(f'\n  Result {idx}')
-            results_str.append(f'\n    Entity ID:       {result["ENTITY"]["RESOLVED_ENTITY"]["ENTITY_ID"]}')
-            results_str.append(f'\n    Entity name:     {result["ENTITY"]["RESOLVED_ENTITY"]["ENTITY_NAME"]}')
-            results_str.append(f'\n    Match key:       {result["MATCH_INFO"]["MATCH_KEY"]}')
+            results_str.append(f'\n    Entity ID:       {entity["ENTITY"]["RESOLVED_ENTITY"]["ENTITY_ID"]}')
+            results_str.append(f'\n    Entity name:     {entity["ENTITY"]["RESOLVED_ENTITY"]["ENTITY_NAME"]}')
+            results_str.append(f'\n    Match key:       {entity["MATCH_INFO"]["MATCH_KEY"]}')
             results_str.append('\n    Records summary: ')
-            for record_summary in result["ENTITY"]["RESOLVED_ENTITY"]["RECORD_SUMMARY"]:
+            for record_summary in entity["ENTITY"]["RESOLVED_ENTITY"]["RECORD_SUMMARY"]:
                 results_str.append(f'{record_summary["DATA_SOURCE"]}: {record_summary["RECORD_COUNT"]}' + '    ')
             results_str.append('\n')
 

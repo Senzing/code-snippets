@@ -2,6 +2,7 @@
 
 import json
 import os
+import sys
 from senzing import G2BadInputException, G2Engine, G2Exception, G2RetryableException, G2UnrecoverableException
 
 engine_config_json = os.getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)

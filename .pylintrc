@@ -3,6 +3,7 @@ disable=
     attribute-defined-outside-init,
     broad-except,
     consider-using-f-string,
+    duplicate-code,
     global-statement,
     global-variable-undefined,
     import-error,
