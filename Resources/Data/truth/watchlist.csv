@@ -1,0 +1,18 @@
+DATA_SOURCE,RECORD_ID,RECORD_TYPE,PRIMARY_NAME_ORG,PRIMARY_NAME_FULL,PRIMARY_NAME_LAST,PRIMARY_NAME_FIRST,GENDER,DATE_OF_BIRTH,DRIVERS_LICENSE_NUMBER,DRIVERS_LICENSE_STATE,SSN_NUMBER,ADDR_TYPE,ADDR_FULL,ADDR_LINE1,ADDR_CITY,ADDR_STATE,ADDR_POSTAL_CODE,ADDR_COUNTRY,PHONE_TYPE,PHONE_NUMBER,EMAIL_ADDRESS,DATE,STATUS,CATEGORY
+WATCHLIST,1006,PERSON,,,Smith Sr,Rob,,3/31/1954,112233,NV,,MAILING,,"123 Main St, Las Vegas ",,,,,,,,1/3/17,Active,Fraud
+WATCHLIST,1007,PERSON,,,Smith,Patricia,,,,,,HOME,,"1515 Adela Ln, LV, NV",,,89132,,,,psmith@email.com,2/4/20,Active,Fraud
+WATCHLIST,1008,PERSON,,,Smith,Robert,,,,,,,,,,,,,,,robert.smith@email.com,3/5/19,Active,Fraud
+WATCHLIST,1012,PERSON,,,Kusha,Eddie,,3/1/1970,,,,MAILING,,"1602 Brenville Pl, San Francisco, CA 94105",San Francisco,CA,94105,,,,,4/6/19,Active,Fraud
+WATCHLIST,1014,PERSON,,,Knight,Eddie,,3/1/70,,,294-66-9999,MAILING,,160 Brenville Pl,San Francisco,CA,94105,,,,,5/7/15,Inactive,Fraud
+WATCHLIST,1021,PERSON,,,,,,,,,201-77-7719,HOME,,1304 Poppy Hills Dr,Blacklick,OH,43004,,,,Kusha123@hmail.com,6/8/16,Active,Fraud
+WATCHLIST,1024,PERSON,,,Antoun,Mhd,,1/7/80,,,,,,,,,,,,,,7/9/18,Active,Fraud
+WATCHLIST,1027,PERSON,,,Anderson,Darletta,,1/7/80,,,,,,,,,,,,,,3/5/19,Active,Fraud
+WATCHLIST,1029,PERSON,,,Dobbins Senior,David,,,,,,HOME,,"Suite 900, 1450 N City Rd",Arlington,,23208,,,,,4/6/20,Active,Fraud
+WATCHLIST,1037,PERSON,,,Sentosa,Maria,,12/11/73,,,,,,,,,,,,,,5/7/15,Active,Fraud
+WATCHLIST,1038,PERSON,,,Medina,Maria,,12/11/73,,,,HOME,,"9304 W. 15th St La Blanca, FL 60527",,,,,,,msentosa@fmail.com,1/3/19,Active,Fraud
+WATCHLIST,1041,PERSON,,,Smith,John,,,,,,HOME,,"3212 W. 32nd St Palm Harbor, FL 60527",,,,,,,,2/4/19,Active,Fraud
+WATCHLIST,1042,PERSON,,,Smith,John,M,,,,,HOME,,"3212 W. 32nd St Palm Harbor, FL 60527",,,,,,,,3/5/18,Inactive,Fraud
+WATCHLIST,2022,ORGANIZATION,Infinity Exports,,,,,,,,,PRIMARY,922 Venice Blvd Venice CA 90291,,,,,,PRIMARY,310-301-3521,,,Active,Sanctions
+WATCHLIST,2052,PERSON,,فيصل صديقي,,,,,,,,PRIMARY,,Jia Musa Shahdara Sheikhupura Road,Lahore,,,Pakistan,,42-7925774,,,,
+WATCHLIST,2061,PERSON,,"ВАСІЛЬЕЎ, Аляксандр Паўлавіч",,,,,,,,,"Tolmacheva Ul., bld. 8, appt. 71 Smolensk",,,,,RUS,PRIMARY,+7(4812)85-62-34,,,,
+WATCHLIST,2062,PERSON,,"ВАСИЛЬЕВ, Александр Павлович",,,,,,,,,,"Tolmacheva Ul., bld. 8, appt. 71 ",Smolensk,,,,,(4812)85-62-34,,,,

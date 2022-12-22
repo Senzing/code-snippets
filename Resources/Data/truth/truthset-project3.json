@@ -1,0 +1,23 @@
+{
+    "DATA_SOURCES":
+    [
+        {
+            "DATA_SOURCE": "CUSTOMERS",
+            "FILE_FORMAT": "JSON",
+            "FILE_NAME": "customers.json",
+            "ENABLED": "Yes"
+        },
+        {
+            "DATA_SOURCE": "WATCHLIST",
+            "FILE_FORMAT": "JSON",
+            "FILE_NAME": "watchlist.json",
+            "ENABLED": "Yes"
+        },
+        {
+            "DATA_SOURCE": "REFERENCE",
+            "FILE_FORMAT": "JSON",
+            "FILE_NAME": "reference.json",
+            "ENABLED": "Yes"
+        }
+    ]
+}

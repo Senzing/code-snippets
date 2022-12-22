@@ -1,0 +1,5 @@
+[
+{"DATA_SOURCE": "PEOPLE", "FILE_FORMAT": "JSON", "FILE_NAME": "sample_person.json"},
+{"DATA_SOURCE": "COMPANIES", "FILE_FORMAT": "JSON", "FILE_NAME": "sample_company.json"}
+]
+
