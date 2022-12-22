@@ -34,13 +34,16 @@ def engine_stats(engine):
 
 
 def redo_count(engine):
+    redo_recs = None
     try:
-        return engine.countRedoRecords()
+        redo_recs = engine.countRedoRecords()
     except G2RetryableException as ex:
         mock_logger('WARN', ex)
     except (G2UnrecoverableException, G2Exception) as ex:
         mock_logger('CRITICAL', ex)
         raise
+
+    return redo_recs
 
 
 def redo_pause(success_recs):

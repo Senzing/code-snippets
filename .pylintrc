@@ -1,10 +1,30 @@
 [pylint]
 disable=
+    attribute-defined-outside-init,
     broad-except,
     consider-using-f-string,
+    global-statement,
+    global-variable-undefined,
+    import-error,
+    invalid-name,
     line-too-long,
+    logging-fstring-interpolation,
+    missing-class-docstring,
+    missing-function-docstring,
+    missing-module-docstring,
+    protected-access,
+    redefined-outer-name,
+    simplifiable-if-statement,
+    too-few-public-methods,
+    too-many-arguments,
     too-many-branches,
+    too-many-instance-attributes,
+    too-many-lines,
     too-many-locals,
+    too-many-nested-blocks,
+    too-many-statements,
+    unspecified-encoding,
+    unused-argument,
 good-names=
     template-python
 ignore=

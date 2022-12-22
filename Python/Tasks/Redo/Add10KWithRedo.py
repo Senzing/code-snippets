@@ -46,7 +46,7 @@ def add_records_from_file(engine, input_file):
 def process_redo(engine):
     success_recs = 0
 
-    print(f'\nStarting to process redo records...')
+    print('\nStarting to process redo records...')
 
     try:
         while True:
@@ -74,7 +74,12 @@ try:
     g2_engine.init('G2Engine', engine_config_json, False)
     add_records_from_file(g2_engine, '../../../Resources/Data/load-10K.json')
     redo_count = g2_engine.countRedoRecords()
-    process_redo(g2_engine) if redo_count else print('No redo records to process')
+
+    if redo_count:
+        process_redo(g2_engine)
+    else:
+        print('No redo records to process')
+
     g2_engine.destroy()
 except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2Exception) as ex:
     print(ex)

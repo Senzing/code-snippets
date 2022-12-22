@@ -23,10 +23,10 @@ try:
     g2_engine.purgeRepository()
 
     for record in records:
-        data_source = record['DATA_SOURCE']
-        record_id = record['RECORD_ID']
-        g2_engine.addRecord(data_source, record_id, json.dumps(record))
-        print(f'Record {record_id} added')
+        DATA_SOURCE = record['DATA_SOURCE']
+        RECORD_ID = record['RECORD_ID']
+        g2_engine.addRecord(DATA_SOURCE, RECORD_ID, json.dumps(record))
+        print(f'Record {RECORD_ID} added')
 
     response = bytearray()
     g2_engine.getEntityByRecordID('TEST', '3', response)
@@ -38,10 +38,10 @@ try:
         print(f'  Entity {rel_entity["ENTITY_ID"]} - {rel_entity["ENTITY_NAME"]} as {rel_entity["MATCH_LEVEL_CODE"]} with {rel_entity["MATCH_KEY"]}')
 
     print()
-    for record_id in ('1', '2', '3'):
-        g2_engine.getEntityByRecordID('TEST', record_id, get_ent_response, G2EngineFlags.G2_ENTITY_BRIEF_DEFAULT_FLAGS)
+    for RECORD_ID in ('1', '2', '3'):
+        g2_engine.getEntityByRecordID('TEST', RECORD_ID, get_ent_response, G2EngineFlags.G2_ENTITY_BRIEF_DEFAULT_FLAGS)
         get_json = json.loads(get_ent_response)
-        print(f'Record {record_id} currently resolves to entity {get_json["RESOLVED_ENTITY"]["ENTITY_ID"]}')
+        print(f'Record {RECORD_ID} currently resolves to entity {get_json["RESOLVED_ENTITY"]["ENTITY_ID"]}')
 
     print('\nUpdating records...\n')
     g2_engine.getRecord('TEST', '1', get1_rec_response)
@@ -53,10 +53,10 @@ try:
     g2_engine.replaceRecord('TEST', '1', json.dumps(get1_json["JSON_DATA"]))
     g2_engine.replaceRecord('TEST', '3', json.dumps(get2_json["JSON_DATA"]))
 
-    for record_id in ('1', '2', '3'):
-        g2_engine.getEntityByRecordID('TEST', record_id, get_ent_response, G2EngineFlags.G2_ENTITY_BRIEF_DEFAULT_FLAGS)
+    for RECORD_ID in ('1', '2', '3'):
+        g2_engine.getEntityByRecordID('TEST', RECORD_ID, get_ent_response, G2EngineFlags.G2_ENTITY_BRIEF_DEFAULT_FLAGS)
         get_json = json.loads(get_ent_response)
-        print(f'Record {record_id} now resolves to entity {get_json["RESOLVED_ENTITY"]["ENTITY_ID"]}')
+        print(f'Record {RECORD_ID} now resolves to entity {get_json["RESOLVED_ENTITY"]["ENTITY_ID"]}')
 
     g2_engine.destroy()
 except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2Exception, json.JSONDecodeError) as ex:

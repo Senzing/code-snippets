@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 
-from os import getenv
+import os
 from senzing import G2Product, G2BadInputException, G2Exception, G2RetryableException, G2UnrecoverableException
 
-engine_config_json = getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
+engine_config_json = os.getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
 
 try:
     g2_product = G2Product()

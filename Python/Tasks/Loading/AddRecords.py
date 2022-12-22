@@ -18,10 +18,10 @@ try:
     g2_engine.init('G2Engine', engine_config_json, False)
 
     for record in records:
-        data_source = record['DATA_SOURCE']
-        record_id = record['RECORD_ID']
-        g2_engine.addRecord(data_source, record_id, json.dumps(record))
-        print(f'Record {record_id} added')
+        DATA_SOURCE = record['DATA_SOURCE']
+        RECORD_ID = record['RECORD_ID']
+        g2_engine.addRecord(DATA_SOURCE, RECORD_ID, json.dumps(record))
+        print(f'Record {RECORD_ID} added')
 
     g2_engine.destroy()
 except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2Exception) as ex:

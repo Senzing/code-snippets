@@ -1,11 +1,11 @@
 #! /usr/bin/env python3
 
-from os import getenv
-from sys import exit
+import os
+import sys
 from senzing import G2BadInputException, G2Engine, G2Exception, G2RetryableException, G2UnrecoverableException
 
-engine_config_json = getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
-record = '''{"RECORD_TYPE": "PERSON",
+engine_config_json = os.getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
+RECORD = '''{"RECORD_TYPE": "PERSON",
              "PRIMARY_NAME_LAST": "Smith",
              "PRIMARY_NAME_FIRST": "Robert",
              "DATE_OF_BIRTH": "12/11/1978",
@@ -23,10 +23,10 @@ record = '''{"RECORD_TYPE": "PERSON",
 try:
     g2_engine = G2Engine()
     g2_engine.init('G2Engine', engine_config_json, False)
-    g2_engine.replaceRecord('TEST', '1001', record)
+    g2_engine.replaceRecord('TEST', '1001', RECORD)
     g2_engine.destroy()
 except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2Exception)as ex:
     print(ex)
-    exit(-1)
+    sys.exit(-1)
 
 print('Record replaced')

@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
-from os import getenv
-from sys import exit
+import os
+import sys
 from senzing import G2ConfigMgr, G2BadInputException, G2Exception, G2RetryableException, G2UnrecoverableException
 
-engine_config_json = getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
+engine_config_json = os.getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
 current_config_id = bytearray()
 config = bytearray()
 
@@ -16,6 +16,6 @@ try:
     g2_config_mgr.destroy()
 except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2Exception) as ex:
     print(ex)
-    exit(-1)
+    sys.exit(-1)
 
 print(config.decode())
