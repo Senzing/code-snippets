@@ -17,7 +17,10 @@ def mock_logger(level, exception, error_rec=None):
 
 def process_redo(engine):
     redo_record = bytearray()
-    engine.processRedoRecord(redo_record)
+    engine.getRedoRecord(redo_record)
+    if not redo_record:
+        return None
+    engine.process(redo_record.decode())
     return redo_record
 
 
@@ -81,7 +84,7 @@ def futures_redo(engine):
                         if success_recs % 2000 == 0:
                             engine_stats(engine)
                     else:
-                        redo_paused = True if not redo_paused else redo_paused
+                        redo_paused = True
                 finally:
                     futures.pop(f)
 

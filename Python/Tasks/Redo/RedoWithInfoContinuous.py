@@ -22,12 +22,14 @@ def process_redo(engine, output_file):
             while True:
                 redo_record = bytearray()
                 with_info = bytearray()
-                engine.processRedoRecordWithInfo(redo_record, with_info)
+                engine.getRedoRecord(redo_record)
 
                 if not redo_record:
                     print(f'No redo records to process, pausing for 30 seconds. Total processed {success_recs} . (CTRL-C to exit)...')
                     time.sleep(30)
                     continue
+
+                engine.processWithInfo(redo_record, with_info)
 
                 success_recs += 1
                 out_file.write(with_info.decode() + '\n')
