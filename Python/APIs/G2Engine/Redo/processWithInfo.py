@@ -6,6 +6,7 @@ from senzing import G2BadInputException, G2Engine, G2Exception, G2RetryableExcep
 
 engine_config_json = os.getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
 redo_record = bytearray()
+with_info = bytearray()
 
 try:
     g2_engine = G2Engine()
@@ -13,7 +14,8 @@ try:
     g2_engine.getRedoRecord(redo_record)
 
     if redo_record:
-        g2_engine.process(redo_record.decode())
+        g2_engine.processWithInfo(redo_record.decode(), with_info)
+        print(with_info.decode())
     else:
         print('No redo records currently available.')
 
