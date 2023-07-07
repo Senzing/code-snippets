@@ -156,7 +156,7 @@ docker build --tag senzing/code-snippets .
 4. Run a container
 ```console
 docker run \
-  --env SENZING_ENGINE_CONFIGURATION_JSON
+  --env SENZING_ENGINE_CONFIGURATION_JSON \
   --interactive \
   --tty \
   --rm \
