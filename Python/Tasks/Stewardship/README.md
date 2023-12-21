@@ -22,12 +22,3 @@ With additional knowledge not represented in Senzing you know record 3 "Pat Smit
 Force UnResolve first adds 3 records and details all records resolved to the same entity. 
 
 With additional knowledge not represented in Senzing you know record 6 "Betsey Jones" is not the same as records 4 and 5; Betsey is a twin to "Elizabeth Jones". To force unresolve Betsey from the Elizabeth entity, first fetch the current representation of each record with getRecord. Next add `TRUSTED_ID_NUMBER` and `TRUSTED_ID_TYPE` attributes to each of the retrieved records. `TRUSTED_ID_NUMBER` uses a different value to indicate these records should always be considered different entities and not resolve together. In this example the data source of the records and their record IDs are used to create `TRUSTED_ID_NUMBER`. `TRUSTED_ID_TYPE` is set as FORCE_UNRESOLVE as an indicator they were forced apart.   
-## API Calls
-* [addRecord](../../../Python/APIs/G2Engine/Data_Manipulation/addRecord.py)
-  * Add records for the example
-* [getEntityByRecordID](../../../Python/APIs/G2Engine/Get/getEntityByRecordID.py)
-  * Get entity by the record ID to identify the entity the record resolved to
-* [getRecord](../../../Python/APIs/G2Engine/Get/getRecord.py)
-  * Fetch the record to modify
-* [replaceRecord](../../../Python/APIs/G2Engine/Data_Manipulation/replaceRecord.py)
-  * Replace the modified record
