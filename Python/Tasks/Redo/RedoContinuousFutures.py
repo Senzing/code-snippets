@@ -4,35 +4,56 @@ import concurrent.futures
 import os
 import sys
 import time
-from senzing import G2BadInputException, G2Engine, G2Exception, G2RetryableException, G2UnrecoverableException
+from senzing import (
+    G2BadInputException,
+    G2Engine,
+    G2Exception,
+    G2RetryableException,
+    G2UnrecoverableException,
+)
 
-engine_config_json = os.getenv('SENZING_ENGINE_CONFIGURATION_JSON', None)
+engine_config_json = os.getenv("SENZING_ENGINE_CONFIGURATION_JSON", None)
 
 
 def mock_logger(level, exception, error_rec=None):
-    print(f'\n{level}: {exception}', file=sys.stderr)
+    print(f"\n{level}: {exception}", file=sys.stderr)
     if error_rec:
-        print(f'{error_rec}', file=sys.stderr)
+        print(f"{error_rec}", file=sys.stderr)
 
 
-def process_redo(engine):
-    redo_record = bytearray()
-    engine.getRedoRecord(redo_record)
-    if not redo_record:
-        return None
-    engine.process(redo_record.decode())
-    return redo_record
+def get_redo_record(engine):
+    try:
+        redo_record = bytearray()
+        engine.getRedoRecord(redo_record)
+    except G2Exception as err:
+        mock_logger("CRITICAL", err)
+        raise err
+
+    return redo_record.decode()
+
+
+def prime_redo_records(engine, quantity):
+    redo_records = []
+    for _ in range(quantity):
+        single_redo_rec = get_redo_record(engine)
+        if single_redo_rec:
+            redo_records.append(single_redo_rec)
+    return redo_records
+
+
+def process_redo_record(engine, record):
+    engine.process(record)
 
 
 def engine_stats(engine):
     response = bytearray()
     try:
         engine.stats(response)
-        print(f'\n{response.decode()}\n')
-    except G2RetryableException as ex:
-        mock_logger('WARN', ex)
-    except (G2UnrecoverableException, G2Exception) as ex:
-        mock_logger('CRITICAL', ex)
+        print(f"\n{response.decode()}\n")
+    except G2RetryableException as err:
+        mock_logger("WARN", err)
+    except G2Exception as err:
+        mock_logger("CRITICAL", err)
         raise
 
 
@@ -40,17 +61,20 @@ def redo_count(engine):
     redo_recs = None
     try:
         redo_recs = engine.countRedoRecords()
-    except G2RetryableException as ex:
-        mock_logger('WARN', ex)
-    except (G2UnrecoverableException, G2Exception) as ex:
-        mock_logger('CRITICAL', ex)
+    except G2RetryableException as err:
+        mock_logger("WARN", err)
+    except G2Exception as err:
+        mock_logger("CRITICAL", err)
         raise
 
     return redo_recs
 
 
-def redo_pause(success_recs):
-    print(f'No redo records to process, pausing for 30 seconds. Total processed: {success_recs} (CTRL-C to exit)...')
+def redo_pause(success):
+    print(
+        "No redo records to process, pausing for 30 seconds. Total processed:"
+        f" {success:,} (CTRL-C to exit)..."
+    )
     time.sleep(30)
 
 
@@ -59,48 +83,69 @@ def futures_redo(engine):
     redo_paused = False
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = {executor.submit(process_redo, engine): _ for _ in range(executor._max_workers)}
+        while True:
+            futures = {
+                executor.submit(process_redo_record, engine, record): record
+                for record in prime_redo_records(engine, executor._max_workers)
+            }
+            if not futures:
+                redo_pause(success_recs)
+            else:
+                break
 
-        while futures:
-            for f in concurrent.futures.as_completed(futures.keys()):
+        while True:
+            done, _ = concurrent.futures.wait(
+                futures, return_when=concurrent.futures.FIRST_COMPLETED
+            )
+            for f in done:
                 try:
-                    result = f.result()
-                except G2BadInputException as ex:
-                    mock_logger('ERROR', ex, futures[f])
+                    _ = f.result()
+                except G2BadInputException as err:
+                    mock_logger("ERROR", err, futures[f])
                     error_recs += 1
-                except G2RetryableException as ex:
-                    mock_logger('WARN', ex, futures[f])
+                except G2RetryableException as err:
+                    mock_logger("WARN", err, futures[f])
                     error_recs += 1
-                except (G2UnrecoverableException, G2Exception) as ex:
-                    mock_logger('CRITICAL', ex, futures[f])
+                except (G2UnrecoverableException, G2Exception) as err:
+                    mock_logger("CRITICAL", err, futures[f])
                     raise
                 else:
-                    if result:
-                        success_recs += 1
-
-                        if success_recs % 100 == 0:
-                            print(f'Processed {success_recs} redo records')
-
-                        if success_recs % 2000 == 0:
-                            engine_stats(engine)
+                    record = get_redo_record(engine)
+                    if record:
+                        futures[
+                            executor.submit(process_redo_record, engine, record)
+                        ] = record
                     else:
                         redo_paused = True
+
+                    success_recs += 1
+                    if success_recs % 100 == 0:
+                        print(
+                            f"Processed {success_recs:,} redo records, with"
+                            f" {error_recs:,} errors"
+                        )
+
+                    if success_recs % 1000 == 0:
+                        engine_stats(engine)
                 finally:
-                    futures.pop(f)
+                    del futures[f]
 
-                if redo_paused:
-                    while not redo_count(engine):
-                        redo_pause(success_recs)
-                    redo_paused = False
-
-                futures[executor.submit(process_redo, engine)] = None
+            if redo_paused:
+                while not redo_count(engine):
+                    redo_pause(success_recs)
+                redo_paused = False
+                while len(futures) < executor._max_workers:
+                    record = get_redo_record(engine)
+                    if record:
+                        futures[
+                            executor.submit(process_redo_record, engine, record)
+                        ] = record
 
 
 try:
     g2_engine = G2Engine()
-    g2_engine.init('G2Engine', engine_config_json, False)
+    g2_engine.init("G2Engine", engine_config_json, False)
     futures_redo(g2_engine)
     g2_engine.destroy()
-except (G2BadInputException, G2RetryableException, G2UnrecoverableException, G2Exception) as ex:
-    print(ex)
-    sys.exit(-1)
+except G2Exception as err:
+    mock_logger("CRITICAL", err)

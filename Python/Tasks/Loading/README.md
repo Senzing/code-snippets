@@ -17,8 +17,3 @@ The loading snippets outline adding new source records. Adding source records in
 * **AddTruthsetLoop.py** 
     * Read and load from multiple source files, adding a sample truth set
 
-## API Calls
-* [addRecord](../../../Python/APIs/G2Engine/Data_Manipulation/addRecord.py)
-  * Adds a single record
-* [addRecordWithInfo](../../../Python/APIs/G2Engine/Data_Manipulation/addRecordWithInfo.py)
-  * Adds a single record and returns information outlining any entities affected by the addition of the record. For further information see [With Info](../../../README.md#with-info)

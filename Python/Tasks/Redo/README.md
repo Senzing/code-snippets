@@ -10,17 +10,10 @@ When an entity requires additional work a record is automatically created in the
 * **Add10KWithRedo.py**
     * Read and load source records from a file and then process any redo records 
 * **RedoContinuous.py**
-    * Basic example of continously monitoring for redo records to process
+    * Basic example of continuously monitoring for redo records to process
 * **RedoContinuousFutures.py**
-    * Continously monitor for redo records to process using concurrent futures and multiple threads
+    * Continuously monitor for redo records to process using concurrent futures and multiple threads
 * **RedoWithInfoContinuous.py**
-    * Continously monitor for redo records to process
+    * Continuously monitor for redo records to process
     * Collect the response from the [with info](../../../README.md#with-info) version of the API and write it to a file
 
-## API Calls
-* [getRedoRecord](../../../Python/APIs/G2Engine/Redo/getRedoRecord.py)
-  * Retrieve a single redo record for processing
-* [process](../../../Python/APIs/G2Engine/Redo/process.py)
-    * Process a single redo record
-* [processWithInfo](../../../Python/APIs/G2Engine/Redo/processWithInfo.py)
-    * Process a single redo record and returns information outlining any entities affected by the processing of the record. For further information see [With Info](../../../README.md#with-info)

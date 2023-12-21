@@ -6,10 +6,8 @@ There are [considerations](https://senzing.zendesk.com/hc/en-us/articles/3600078
 ## Snippets
 * **Search5kFutures.py**
     * Read and search for records from a file using multiple threads
+    * To see results first load records with [Add10KFutures.py](../Loading/Add10KFutures.py)
 * **SearchRecords.py**
     * Basic iteration over a few records, searching for each one
+    * To see results first load records with [AddTruthSetLoop.py](../Loading/AddTruthsetLoop.py)
 
-## API Calls
-* [searchByAttributes](../../../Python/APIs/G2Engine/Search/searchByAttributes.py)
-  * Search for any existing matching entities
-  

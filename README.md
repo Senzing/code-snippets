@@ -1,20 +1,11 @@
 # code-snippets
 
-## Synopsis
-
-Succinct examples for working with the Senzing SDK.
-
 ## Overview
 
-The snippets are divided into 2 categories: 
-
-1) APIs - examples of calling the SDK APIs
-2) Tasks - basic examples of how you might use the APIs for operational tasks
-
+Succinct examples of how you might use the Senzing APIs for operational tasks. 
 ## Contents
 
-1. [Preamble](#preamble)
-    1. [Legend](#legend)
+1. [Legend](#legend)
 1. [Warning](#warning)
 1. [Senzing Engine Configuration](#senzing-engine-configuration)
 1. [Senzing APIs Bare Metal Usage](#senzing-apis-bare-metal-usage)
@@ -30,18 +21,6 @@ The snippets are divided into 2 categories:
     4. [Randomize Input Files](#randomize-input-files)
     5. [Purging Senzing Repository Between Examples](#purging-senzing-repository-between-examples)
     6. [Input Load File Sizes](#input-load-file-sizes)
-
-## Preamble
-Items of Note
-At [Senzing](http://senzing.com),
-we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
-For the most part, instructions are copy and paste.
-Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
-Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
-If the instructions are not clear, please let us know by opening a new
-[Documentation issue](https://github.com/Senzing/template-python/issues/new?template=documentation_request.md)
-describing where we can improve.   Now on with the show...
 
 ### Legend
 
@@ -185,22 +164,22 @@ A feature of Senzing is the capability to pass changes from data manipulation AP
 The AFFECTED_ENTITIES object contains a list of all entity IDs affected. Separate processes can query the affected entities and synchronize changes and information to downstream systems. For additional information see [Real-time replication and analytics](https://senzing.zendesk.com/hc/en-us/articles/4417768234131--Advanced-Real-time-replication-and-analytics). 
 
 ### Parallel Processing
-Many of the example tasks demonstrate asynchronous execution with concurrent threads. The entity resolution process involves IO operations, the use of concurrent processes and threads when calling the Senzing APIs provides scalability and performance. If using multiple processes, each process should have its own instance of a Senzing engine, for example G2Engine. Each engine object can support multiple threads.
+Many of the example tasks demonstrate concurrent execution with threads. The entity resolution process involves IO operations, the use of concurrent processes and threads when calling the Senzing APIs provides scalability and performance. If using multiple processes, each process should have its own instance of a Senzing engine, for example G2Engine. Each engine object can support multiple threads.
 
 ### Scalability
 Many of the examples demonstrate using multiple threads to utilize the resources available on the machine. Consider loading data into Senzing and increasing the load rate, loading (and other tasks) can be horizontally scaled by utilizing additional machines. 
 
 If a single very large load file and 3 machines were available for performing data load, the file can be split into 3 with each machine running the sample code or your own application. Horizontal scaling such as this does require the Senzing database to have the capacity to accept the additional workload and not become the bottleneck.  
 
-### Randomize Input Files
-When providing your own input file(s) to the snippets or your own applications and processing data manipulation tasks (adding, deleting, replacing), it is important to randomize the file(s) when running multiple threads. If source records that pertain to the same entity are clustered together in the input file, multiple processes or threads could all be trying to work on the same entity concurrently. This causes contention and overhead resulting in slower performance. To prevent this contention always randomize input files. 
+### Randomize Input Data
+When providing your own input file(s) to the snippets or your own applications and processing data manipulation tasks (adding, deleting, replacing), it is important to randomize the file(s) or other input methods when running multiple threads. If source records that pertain to the same entity are clustered together, multiple processes or threads could all be trying to work on the same entity concurrently. This causes contention and overhead resulting in slower performance. To prevent this contention always randomize input data. 
 
 You may be able to randomize your input files during ETL and mapping the source data to the [Senzing Entity Specification](https://senzing.zendesk.com/hc/en-us/articles/231925448-Generic-Entity-Specification). Otherwise utilities such as [shuf](https://man7.org/linux/man-pages/man1/shuf.1.html) or [terashuf](https://github.com/alexandres/terashuf) for large files can be used.
 
 ### Purging Senzing Repository Between Examples
 When trying out different examples you may notice consecutive tasks complete much faster than an initial run. For example, running a loading task for the first time without the data in the system will be representative of load rate. If the same example is subsequently run again without purging the system it will complete much faster. This is because Senzing knows the records already exist in the system and it skips them.
 
-To run the same example again and see representative performance, first [purge](Python/APIs/G2Engine/Purge/) the Senzing repository of the loaded data. Some examples don't require purging between running them, an example would be the deleting examples that require data to be ingested first. See the usage notes for each task category for an overview of how to use the snippets. 
+To run the same example again and see representative performance, first [purge](Python/Tasks/Initialization/PurgeRepository.py) the Senzing repository of the loaded data. Some examples don't require purging between running them, an example would be the deleting examples that require data to be ingested first. See the usage notes for each task category for an overview of how to use the snippets. 
 
 ### Input Load File Sizes
-There are different sized load files within the [Data](Resources/Data/) path that can be used to decrease or increase the volume of data loaded depending on the specification of your hardware. The files are named load-x.json, where the x specifies the number of records in the file.
+There are different sized load files within the [Data](Resources/Data/) path that can be used to decrease or increase the volume of data loaded depending on the specification of your hardware. The files are named loadx.json, where the x specifies the number of records in the file.

@@ -12,8 +12,3 @@ To replace an existing loaded record use the same data source code and record ID
 * **ReplaceRecords.py** 
     * Basic iteration over a few records, replacing each one
 
-## API Calls
-* [replaceRecord](../../../Python/APIs/G2Engine/Data_Manipulation/replaceRecord.py)
-  * Replaces a single record
-* [replaceRecordWithInfo](../../../Python/APIs/G2Engine/Data_Manipulation/replaceRecordWithInfo.py)
-  * Replaces a single record and returns information outlining any entities affected by the replacement of the record. For further information see [With Info](../../../README.md#with-info)
