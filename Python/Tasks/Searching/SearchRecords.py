@@ -3,10 +3,11 @@
 import json
 import os
 import sys
-from collections import Counter
+
 from senzing import (
     G2BadInputException,
     G2Engine,
+    G2EngineFlags,
     G2Exception,
     G2RetryableException,
     G2UnrecoverableException,
@@ -42,59 +43,30 @@ def mock_logger(level, exception, error_rec=None):
 def searcher(engine):
     for rec_to_search in search_records:
         try:
+            rec_str = json.dumps(rec_to_search)
             search_response = bytearray()
-            engine.searchByAttributes(json.dumps(rec_to_search), search_response)
+            engine.searchByAttributes(
+                rec_str,
+                search_response,
+                G2EngineFlags.G2_SEARCH_BY_ATTRIBUTES_MINIMAL_ALL,
+            )
         except (G2BadInputException, json.JSONDecodeError) as err:
-            mock_logger("ERROR", err, rec_to_search)
+            mock_logger("ERROR", err, rec_str)
         except G2RetryableException as err:
-            mock_logger("WARN", err, rec_to_search)
+            mock_logger("WARN", err, rec_str)
         except (G2UnrecoverableException, G2Exception) as err:
-            mock_logger("CRITICAL", err, rec_to_search)
+            mock_logger("CRITICAL", err, rec_str)
             raise
         else:
-            response_dict = json.loads(search_response.decode())
+            response_str = search_response.decode()
+            response_dict = json.loads(response_str)
             response_entities = response_dict.get("RESOLVED_ENTITIES", None)
 
+            print("-" * 100)
             if response_entities:
-                results_str = []
-                results_count = Counter(
-                    k
-                    for entity in response_entities
-                    for k in entity.keys()
-                    if k.startswith("MATCH_INFO")
-                )
-                results_str.append(
-                    f'\n{results_count["MATCH_INFO"]} results for'
-                    f" {json.dumps(rec_to_search)}\n"
-                )
-
-                for idx, result in enumerate(response_entities, start=1):
-                    results_str.append(f"\n  Result {idx}")
-                    results_str.append(
-                        "\n    Entity ID:      "
-                        f" {result['ENTITY']['RESOLVED_ENTITY']['ENTITY_ID']}"
-                    )
-                    results_str.append(
-                        "\n    Entity name:    "
-                        f" {result['ENTITY']['RESOLVED_ENTITY']['ENTITY_NAME']}"
-                    )
-                    results_str.append(
-                        f'\n    Match key:       {result["MATCH_INFO"]["MATCH_KEY"]}'
-                    )
-                    results_str.append("\n    Records summary: ")
-                    for record_summary in result["ENTITY"]["RESOLVED_ENTITY"][
-                        "RECORD_SUMMARY"
-                    ]:
-                        results_str.append(
-                            f'{record_summary["DATA_SOURCE"]}:'
-                            f' {record_summary["RECORD_COUNT"]}'
-                            + "    "
-                        )
-                    results_str.append("\n")
-
-                print("".join(results_str))
+                print(f"Result for {rec_str}:\n\n{response_str}\n")
             else:
-                print(f"\nNo result for {json.dumps(rec_to_search)}\n")
+                print(f"No result for {rec_str}\n")
 
 
 try:

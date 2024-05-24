@@ -6,10 +6,11 @@ import json
 import os
 import sys
 import time
-from collections import Counter
+
 from senzing import (
     G2BadInputException,
     G2Engine,
+    G2EngineFlags,
     G2Exception,
     G2RetryableException,
     G2UnrecoverableException,
@@ -26,7 +27,11 @@ def mock_logger(level, exception, error_rec=None):
 
 def search_record(engine, rec_to_search):
     search_response = bytearray()
-    engine.searchByAttributes(rec_to_search, search_response)
+    engine.searchByAttributes(
+        rec_to_search,
+        search_response,
+        G2EngineFlags.G2_SEARCH_BY_ATTRIBUTES_MINIMAL_ALL,
+    )
     return search_response
 
 
@@ -52,43 +57,15 @@ def record_stats(success, error, prev_time):
 
 
 def search_results(result, record, out_file):
-    response_dict = json.loads(result.decode())
+    response_str = result.decode()
+    response_dict = json.loads(response_str)
     response_entities = response_dict.get("RESOLVED_ENTITIES", None)
 
+    out_file.write("-" * 100 + "\n")
     if response_entities:
-        results_str = []
-        results_count = Counter(
-            k
-            for entity in response_entities
-            for k in entity.keys()
-            if k.startswith("MATCH_INFO")
-        )
-        results_str.append(f'\n{results_count["MATCH_INFO"]} results for {record}')
-
-        for idx, entity in enumerate(response_entities, start=1):
-            results_str.append(f"\n  Result {idx}")
-            results_str.append(
-                "\n    Entity ID:      "
-                f" {entity['ENTITY']['RESOLVED_ENTITY']['ENTITY_ID']}"
-            )
-            results_str.append(
-                "\n    Entity name:    "
-                f" {entity['ENTITY']['RESOLVED_ENTITY']['ENTITY_NAME']}"
-            )
-            results_str.append(
-                f'\n    Match key:       {entity["MATCH_INFO"]["MATCH_KEY"]}'
-            )
-            results_str.append("\n    Records summary: ")
-            for record_summary in entity["ENTITY"]["RESOLVED_ENTITY"]["RECORD_SUMMARY"]:
-                results_str.append(
-                    f'{record_summary["DATA_SOURCE"]}: {record_summary["RECORD_COUNT"]}'
-                    + "    "
-                )
-            results_str.append("\n")
-
-        out_file.write("".join(results_str))
+        out_file.write(f"Result for {record.rstrip()}:\n\n{response_str}\n\n")
     else:
-        out_file.write(f"\nNo result for {record}\n")
+        out_file.write(f"No result for {record}\n\n")
 
 
 def futures_search(engine, input_file, output_file):
