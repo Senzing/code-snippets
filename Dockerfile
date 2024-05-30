@@ -4,8 +4,8 @@ FROM ${BASE_IMAGE}
 ENV REFRESHED_AT=2022-12-21
 
 LABEL Name="senzing/code-snippets" \
-      Maintainer="support@senzing.com" \
-      Version="0.0.1"
+  Maintainer="support@senzing.com" \
+  Version="0.0.1"
 
 # Run as "root" for system installation.
 
@@ -14,23 +14,25 @@ USER root
 # Install packages via apt.
 
 RUN apt-get update \
- && apt-get -y install \
-      vim \
-      nano \
-      curl \
-      less \
-      python3 \
-      ipython3 \
-      python3-pip \
-      python3-virtualenv \
-      python3-venv \
- && rm -rf /var/lib/apt/lists/*
+  && apt-get -y install \
+  vim \
+  nano \
+  curl \
+  less \
+  python3 \
+  ipython3 \
+  python3-pip \
+  python3-virtualenv \
+  python3-venv \
+  && rm -rf /var/lib/apt/lists/*
 
 ## Copy files from repository.
 
 COPY ./Python/ /code-snippets/Python
 COPY ./Resources/ /code-snippets/Resources
 COPY ./rootfs /
+
+HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
 # Make non-root container.
 
